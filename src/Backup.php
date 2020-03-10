@@ -24,10 +24,10 @@ class Backup
    private $backupName = 'backup';
 
    /** @var string **/
-   private $salt = 'fYsFHYEjnfwPVxHWek8ZlQ==';
+   private $salt = null;
 
    /** @var HiddenString **/
-   private $secret = 'secret';
+   private $secret = null;
 
    /** @var string **/
    private $azureConnectionString;
@@ -79,7 +79,6 @@ class Backup
       $this->backupName .= '-' . (new DateTime)->format('Y-m-d-H-i');
       $this->backupFolder = sys_get_temp_dir() . '/' .  $this->backupName;
       mkdir($this->backupFolder);
-      $this->secret = new HiddenString($this->secret);
    }
 
    /**
