@@ -1,7 +1,7 @@
 {
     "name": "adapt/offsite-backup",
     "description": "Offsite backup",
-    "version" : "1.0",
+    "version" : "1.0.0",
     "require": {
         "microsoft/azure-storage-blob": "^1.5",
         "nelexa/zip": "^3.3",
