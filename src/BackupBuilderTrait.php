@@ -28,7 +28,7 @@ trait BackupBuilderTrait
       return $this;
    }
    
-   public function setAzureContaioner(string $container): self
+   public function setAzureContainer(string $container): self
    {
       $this->azureContainer = $container;
       
