@@ -25,12 +25,12 @@ The scheme-only tables can be set with:
 
 Add repository to the package.json file:
 
-  "repositories": [
+    "repositories": [
       {
-          "type": "git",
-          "url": "https://github.com/adaptdk/offsite-backup"
+        "type": "git",
+        "url": "https://github.com/adaptdk/offsite-backup"
       }
-  ]
+    ]
 
 Add dependency:
 
@@ -38,11 +38,11 @@ Add dependency:
 
 ## Environment variables
 
-OFFSITE_BACKUP_CONTAINER= < the azure container name >
-OFFSITE_BACKUP_ENDPOINT= < the azure endpoint name >
-OFFSITE_BACKUP_SAS= < the azure shared access secret >
-OFFSITE_BACKUP_SALT= generate with base64_encode(random_bytes(16))
-OFFSITE_BACKUP_SECRET= < secret >
+    OFFSITE_BACKUP_CONTAINER= < the azure container name >
+    OFFSITE_BACKUP_ENDPOINT= < the azure endpoint name >
+    OFFSITE_BACKUP_SAS= < the azure shared access secret >
+    OFFSITE_BACKUP_SALT= generate with base64_encode(random_bytes(16))
+    OFFSITE_BACKUP_SECRET= < secret >
 
 ### Laravel config
 
