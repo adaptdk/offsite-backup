@@ -6,7 +6,7 @@
         "microsoft/azure-storage-blob": "^1.5",
         "nelexa/zip": "^3.3",
         "paragonie/halite": "^4.6",
-        "paragonie/random_compat" : ">=2",
+        "paragonie/random_compat" : "~2|~9",
         "spatie/db-dumper": "^2.15",
         "spatie/enum": "^2.3"
     },
