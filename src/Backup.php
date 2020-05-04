@@ -7,6 +7,7 @@ use Adapt\OffsiteBackup\DatabaseTypeEnum;
 use DateTime;
 use PhpZip\Exception\ZipException;
 use PhpZip\ZipFile;
+use PhpZip\Util\Iterator\IgnoreFilesRecursiveFilterIterator;
 use Spatie\DbDumper\Compressors\GzipCompressor;
 use Spatie\DbDumper\DbDumper;
 use ParagonIE\Halite\File;
@@ -59,11 +60,11 @@ class Backup
    /** @var array **/
    private $schemaOnlyTables = null;
 
-   /** @var string **/
+   /** @var array **/
    private $folders = [];
 
-   /** @var string **/
-   private $excludePattern = null;
+   /** @var array **/
+   private $ignoreFolders = [];
 
    /** @var array **/
    private $backupFolder = '/tmp';
@@ -86,11 +87,10 @@ class Backup
     * Execute the individual handlers, encrypt and upload to azure.
     * @return bool
     */
-   
-   public function execute() : bool
+   public function execute(): bool
    {
       $this->backupFiles[] = $this->handleTables();
-      
+
       if ($this->schemaOnlyTables !== null) {
          $this->backupFiles[] = $this->handleSchemaOnlyTables();
       }
@@ -114,7 +114,7 @@ class Backup
     * Encrypt all files in $this->backupFiles array.
     * @return array
     */
-   private function encryptFiles() : array
+   private function encryptFiles(): array
    {
       $encrypted = [];
 
@@ -131,7 +131,7 @@ class Backup
       return $encrypted;
    }
 
-   private function uploadFiles() : void
+   private function uploadFiles(): void
    {
       $blobClient = BlobRestProxy::createBlobService($this->azureConnectionString);
       foreach ($this->encryptedFiles as $fileToUpload) {
@@ -148,7 +148,7 @@ class Backup
     * Dump tables and data
     * @return string
     */
-   private function handleTables() : string
+   private function handleTables(): string
    {
       $dbDumper = $this->createDatabaseDumper();
 
@@ -162,13 +162,13 @@ class Backup
 
       return $outputFilename;
    }
-   
+
    /**
     * handleSchemaOnlyTables
     * Dump tables where data is omitted
     * @return string
     */
-   private function handleSchemaOnlyTables() : string
+   private function handleSchemaOnlyTables(): string
    {
       $dbDumper = $this->createDatabaseDumper();
 
@@ -181,7 +181,7 @@ class Backup
 
       return $outputFilename;
    }
-   
+
    /**
     * createDatabaseDumper
     * Initialize database dumper
@@ -205,7 +205,7 @@ class Backup
     * Creates ZIP archive from array of paths
     * @return string
     */
-   private function handleFiles() : string
+   private function handleFiles(): string
    {
 
       $outputFilename = $this->getOutputFilename('files.zip');
@@ -213,7 +213,9 @@ class Backup
 
       try {
          foreach ($this->folders as $key => $folder) {
-            $zipFile->addDirRecursive($folder, $key); // add files from the directory
+            $directoryIterator = new \RecursiveDirectoryIterator($folder);
+            $ignoreIterator = new IgnoreFilesRecursiveFilterIterator($directoryIterator, $this->ignoreFolders);
+            $zipFile->addFilesFromIterator($ignoreIterator, $key);
          }
          $zipFile->saveAsFile($outputFilename); // save the archive to a file
          $zipFile->close();                     // close archive
@@ -231,7 +233,7 @@ class Backup
     * Dump envrironment variables to json encoded file.
     * @return string
     */
-   private function handleConfig() : string
+   private function handleConfig(): string
    {
       $outputFilename = $this->getOutputFilename('config.json');
 
