@@ -7,7 +7,7 @@
         "nelexa/zip": "^4",
         "paragonie/halite": "^4.6",
         "paragonie/random_compat" : "~2|~9",
-        "spatie/db-dumper": "^2.15",
+        "spatie/db-dumper": "^2.15|^3.2",
         "spatie/enum": "^3.13"
     },
     "autoload": {
