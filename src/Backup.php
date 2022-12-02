@@ -104,7 +104,7 @@ class Backup
       $this->uploadFiles();
 
       // Delete the temporary backup folder
-      rmdir($this->backupFolder);
+      //rmdir($this->backupFolder);
 
       return true;
    }
@@ -125,7 +125,7 @@ class Backup
          $encryptedFilename = $file . '.encrypted';
          File::encrypt($file, $encryptedFilename, $encryptionKey);
          $encrypted[] = $encryptedFilename;
-         unlink($file);
+         //unlink($file);
       }
 
       return $encrypted;
@@ -139,7 +139,7 @@ class Backup
          $path = $this->backupName . '/' . basename($fileToUpload);
          /** @var MicrosoftAzure\Storage\Blob\Models\PutBlobResult $result **/
          $result = $blobClient->createBlockBlob($this->azureContainer, $path, $content);
-         unlink($fileToUpload);
+         //unlink($fileToUpload);
       }
    }
 
