@@ -1,0 +1,30 @@
+#!/usr/bin/env php
+<?php
+
+if (\PHP_VERSION_ID < 70100) {
+    echo "Phint requires PHP7.1 or newer\n";
+    exit(1);
+}
+
+if (\file_exists(__DIR__ . '/../../../autoload.php')) {
+    require __DIR__ . '/../../../autoload.php';
+} elseif (\file_exists(__DIR__ . '/../../autoload.php')) {
+    require __DIR__ . '/../../autoload.php';
+} else {
+    require __DIR__ . '/../vendor/autoload.php';
+}
+                          
+$logo = "
+█████   █████   ██████ ██   ██ ██    ██ ██████  
+██   ██ ██   ██ ██      ██  ██  ██    ██ ██   ██ 
+██████  ███████ ██      █████   ██    ██ ██████  
+██   ██ ██   ██ ██      ██  ██  ██    ██ ██      
+██████  ██   ██  ██████ ██   ██  ██████  ██               
+";
+
+$app = new Ahc\Cli\Application('Backup', '0.1');
+
+$app->add(new Adapt\Backup\BackupCommand, 'ex');
+$app->add(new Adapt\Backup\DownloadBackupCommand, 'dl');
+
+$app->logo($logo)->handle($_SERVER['argv']);
