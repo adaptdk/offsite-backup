@@ -1,0 +1,28 @@
+{
+    "name": "adapt/backup",
+    "description": "Offsite backup for drupal",
+    "type": "program",
+    "license": "GPL-2.0+",
+    "minimum-stability": "stable",
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/adaptdk/offsite-backup"
+        }
+    ],
+    "require": {
+        "adapt/offsite-backup": "^1.0.3",
+        "adhocore/cli": "^0.8.3",
+        "symfony/dotenv": "^5.0",
+        "platformsh/config-reader": "^2.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Adapt\\Backup\\": "src/"
+        }
+    },
+    "bin": ["bin/backup"],
+    "require-dev": {
+        "symfony/var-dumper": "^5.0"
+    }
+}

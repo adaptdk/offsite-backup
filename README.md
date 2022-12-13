@@ -18,7 +18,7 @@ The scheme-only tables can be set with:
     ->setSchemaOnlyTables(['table-name', ...])
 
 .. or a drupal specific variant that by default will include the `cache_*` tables:
-   
+
     ->setSchemaOnlyDrupalDefaultAndTables(['table-name', ...])
 
 ## Installation
@@ -130,3 +130,13 @@ Example on how you could create Laravel command (database is postgres):
             }
         }
     }
+
+## Restoring backups
+1. Go into the `backup-command` directory
+2. Run `composer install`
+3. Copy the `.env.example` to `.env`
+4. Update the `.env` to contain the same values as the environment you want to download the backup from
+5. Run `./bin/backup dl`
+6. The container and backup name can be found in Azure
+
+
