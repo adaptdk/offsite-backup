@@ -12,7 +12,7 @@ final class DatabaseTypeEnum extends Enum
 {
     public function schemaOnlyOption() : string
     {
-        switch ($this->getValue()) {
+        switch ($this->value) {
             case 'mysql':
                 return '--no-data';
                 break;
@@ -21,10 +21,10 @@ final class DatabaseTypeEnum extends Enum
                 break;
         }
     }
-    
+
     public function dumperClassName() : string
     {
-        switch ($this->getValue()) {
+        switch ($this->value) {
             case 'mysql':
                 return 'Spatie\DbDumper\Databases\MySql';
                 break;
@@ -33,10 +33,10 @@ final class DatabaseTypeEnum extends Enum
                 break;
         }
     }
-    
+
     public function defaultPort() : int
     {
-        switch ($this->getValue()) {
+        switch ($this->value) {
             case 'mysql':
                 return 3306;
                 break;
